@@ -9,6 +9,9 @@ Route::middleware(['auth', 'App\Http\Middleware\LoginMiddleware'])->group(functi
     Route::get('/', [TrackerController::class, 'index'])
         ->name('tracker');
 
+    Route::post('/', [TrackerController::class, 'store'])
+        ->name('tracker.store');
+
 });
 
 

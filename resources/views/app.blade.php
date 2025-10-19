@@ -22,12 +22,6 @@
             html.dark { background-color: oklch(0.145 0 0); }
         </style>
 
-        {{-- PWA meta tags --}}
-        <link rel="manifest" href="/manifest.webmanifest">
-        <meta name="theme-color" content="#4B5563">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
         {{-- Icons --}}
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">

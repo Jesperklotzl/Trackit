@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Track;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -16,6 +17,7 @@ class TrackerController extends Controller
         $lastTracked = $user->latest_track_time;
         $tracks = $user->tracks;
 
+
         return Inertia::render('Tracker', []);
 
     }
@@ -26,7 +28,9 @@ class TrackerController extends Controller
     public function store(Request $request)
     {
 
-
+        Track::create([
+            'user_id' => auth()->user()->id
+        ]);
 
     }
 }

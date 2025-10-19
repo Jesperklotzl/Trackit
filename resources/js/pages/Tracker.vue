@@ -2,9 +2,19 @@
 import { computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import type { AppPageProps, User } from '@/types';
+import { router } from '@inertiajs/vue3'
 
 const page = usePage<AppPageProps>();
 const user = computed<User | null>(() => page.props.auth.user ?? null);
+
+
+function addTimestamp() {
+    router.post('/', {}, {
+        onSuccess: () => {
+            router.reload({ only: ['data'] }) // reload just the 'data' prop
+        },
+    })
+}
 
 </script>
 
@@ -35,7 +45,7 @@ const user = computed<User | null>(() => page.props.auth.user ?? null);
 
                 <button
                     class="relative z-10 w-[calc(100%-1rem)] h-[calc(100%-1rem)] rounded-full border-4 border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center active:scale-[0.98] transition-transform duration-150"
-                    @click="incrementCounter"
+                    @click="addTimestamp"
                 >
                     <p class="text-white text-base font-normal tracking-wide opacity-80 mb-2">
                         Today's Progress

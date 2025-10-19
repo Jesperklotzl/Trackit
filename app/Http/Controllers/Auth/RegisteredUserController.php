@@ -47,6 +47,6 @@ class RegisteredUserController extends Controller
 
         $request->session()->regenerate();
 
-        return to_route('tracker.index')->with('status', 'Your account has been created.');
+        return to_route('tracker')->with('status', 'Your account has been created.');
     }
 }
