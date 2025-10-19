@@ -1,15 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\TrackerController;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-})->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'App\Http\Middleware\LoginMiddleware'])->group(function () {
+
+    Route::get('/', [TrackerController::class, 'index'])
+        ->name('tracker');
+
+});
+
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

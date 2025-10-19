@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -31,8 +30,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'two_factor_secret',
-        'two_factor_recovery_codes',
         'remember_token',
     ];
 
@@ -46,7 +43,25 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'two_factor_confirmed_at' => 'datetime',
         ];
     }
+
+    public function tracks(): hasMany
+    {
+        return $this->hasMany(Track::class);
+    }
+
+    public function latestTrack(): hasOne
+    {
+        return $this->hasOne(Track::class)->latestOfMany();
+    }
+
+    protected function latestTrackTime(): Attribute
+    {
+        return Attribute::get(function () {
+            $track = $this->latestTrack;
+            return $track ? $track->created_at->diffForHumans() : null;
+        });
+    }
+
 }
